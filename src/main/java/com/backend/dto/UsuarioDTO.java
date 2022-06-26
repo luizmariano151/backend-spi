@@ -2,6 +2,7 @@ package com.backend.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
@@ -17,9 +18,8 @@ public class UsuarioDTO {
 	@NotBlank(message = "NOME É OBRIGATÓRIO")
 	private String nome;
 	
-	@Size(min = 12, max = 12, message = "MATRÍCULA INVÁLIDA")
-	@NotBlank(message = "MATRÍCULA É OBRIGATÓRIA")
-	private String matricula;
+	@NotNull(message = "MATRÍCULA É OBRIGATÓRIA")
+	private Long matricula;
 	
 	@CPF(message = "CPF INVÁLIDO")
 	@NotBlank(message = "CPF É OBRIGATÓRIO")

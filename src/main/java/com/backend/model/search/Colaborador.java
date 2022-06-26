@@ -25,7 +25,7 @@ public class Colaborador {
 	@Column(name = "colaborador_id")
 	private Long id;
 	
-	private String matricula;
+	private Long matricula;
 	
 	private String nome;
 	

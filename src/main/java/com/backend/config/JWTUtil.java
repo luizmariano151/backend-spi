@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -35,13 +37,16 @@ public class JWTUtil {
 	}
 
 	public <T> T extrairClaim(String token, Function<Claims, T> claimsResolver) {
-		Claims claims = extrairClaims(token);
-		return claimsResolver.apply(claims);
+		try {
+			Claims claims = extrairClaims(token);
+			return claimsResolver.apply(claims);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	private Claims extrairClaims(String token) {
 		return Jwts.parser().setSigningKey(TOKEN_SENHA).parseClaimsJws(token).getBody();
-
 	}
 
 	private Boolean isTokenExpired(String token) {

@@ -42,7 +42,7 @@ public class Usuario implements UserDetails{
 	private String nome;
 	
 	@Column(unique = true, nullable = false)
-	private String matricula;
+	private Long matricula;
 	
 	@Column(unique = true, nullable = false)
 	private String cpf;
