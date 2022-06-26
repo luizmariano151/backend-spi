@@ -3,6 +3,7 @@ package com.backend.model.user;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.backend.model.search.Campus;
-import com.backend.model.search.ColaboradorPesquisa;
+import com.backend.model.search.Colaborador;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
@@ -32,11 +34,13 @@ public class FuncionarioCCA extends Usuario{
 	
 	@ManyToOne
 	@JoinColumn(name = "campus_id")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Campus campus;
 	
-	@OneToMany(mappedBy = "funcionarioCCA")
-	private List<ColaboradorPesquisa> colaboradores;
-
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "funcionarioCCA")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private List<Colaborador> colaboradores;
+	
 	public FuncionarioCCA() {
 	}
 
@@ -65,4 +69,5 @@ public class FuncionarioCCA extends Usuario{
 		result = prime * result + Objects.hash(campus, colaboradores, id);
 		return result;
 	}
+
 }

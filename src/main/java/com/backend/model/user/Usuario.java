@@ -20,6 +20,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
@@ -37,51 +38,70 @@ public class Usuario implements UserDetails{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(unique = true, length = 100)
+	@Column(length = 100, nullable = false)
+	private String nome;
+	
+	@Column(unique = true, nullable = false)
+	private String matricula;
+	
+	@Column(unique = true, nullable = false)
+	private String cpf;
+	
+	@Column(unique = true, nullable = false, length = 100)
 	private String email;
 
+	@Column(nullable = true)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String senha;
 	
 	@Enumerated(EnumType.STRING)
 	private TipoUsuario tipoUsuario;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Set<Role> roles;
 	
 	public Usuario() {
 	}
 
 	@Override
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return roles;
 	}
 
 	@Override
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	public String getPassword() {
 		return this.senha;
 	}
 
 	@Override
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	public String getUsername() {
 		return this.email;
 	}
 
 	@Override
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 
 	@Override
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 
 	@Override
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
 	@Override
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	public boolean isEnabled() {
 		return true;
 	}

@@ -1,37 +1,42 @@
 package com.backend.dto;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.hibernate.validator.constraints.br.CPF;
 
-import com.backend.model.user.TipoUsuario;
 import com.backend.model.user.Usuario;
 
 import lombok.Data;
 
 @Data
 public class UsuarioDTO {
+
+	@Size(min = 4, max = 100, message = "NOME DEVE TER ENTRE 4 E 100 CARACTERES")
+	@NotBlank(message = "NOME É OBRIGATÓRIO")
+	private String nome;
 	
-	@NotEmpty
-	@Email
+	@Size(min = 12, max = 12, message = "MATRÍCULA INVÁLIDA")
+	@NotBlank(message = "MATRÍCULA É OBRIGATÓRIA")
+	private String matricula;
+	
+	@CPF(message = "CPF INVÁLIDO")
+	@NotBlank(message = "CPF É OBRIGATÓRIO")
+	private String cpf;
+	
+	@NotBlank(message = "EMAIL É OBRIGATÓRIO")
+	@Email(message = "EMAIL INVÁLIDO")
 	private String email;
-	
-	@NotEmpty
-	@Size(min=3, max = 8)
-	private String senha;
-	
-	private TipoUsuario tipoUsuario;
 	
 	public Usuario parser(){
 		
 		Usuario usuario = new Usuario();
+		usuario.setNome(this.nome);
+		usuario.setMatricula(this.matricula);
+		usuario.setCpf(this.cpf);
 		usuario.setEmail(this.email);
-		usuario.setSenha(new BCryptPasswordEncoder().encode(this.senha));
-		usuario.setTipoUsuario(this.tipoUsuario);
 		
 		return usuario;
-	}
-	
+	}	
 }

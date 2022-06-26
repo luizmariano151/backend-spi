@@ -30,8 +30,7 @@ public class PesquisadorInstitucional extends Usuario {
 	@OneToMany(mappedBy = "pesquisador")
 	private List<Pesquisa> pesquisas; 
 	
-	public PesquisadorInstitucional() {
-	}
+	public PesquisadorInstitucional() {}
 	
 	@Override
 	public String toString() {

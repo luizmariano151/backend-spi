@@ -41,6 +41,7 @@ public class JWTUtil {
 
 	private Claims extrairClaims(String token) {
 		return Jwts.parser().setSigningKey(TOKEN_SENHA).parseClaimsJws(token).getBody();
+
 	}
 
 	private Boolean isTokenExpired(String token) {
@@ -48,6 +49,7 @@ public class JWTUtil {
 	}
 
 	private String criarToken(Map<String, Object> claims, String subject) {
+
 		String token = Jwts.builder().setClaims(claims).setSubject(subject)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + 500 * 60 * 60 * 10))
