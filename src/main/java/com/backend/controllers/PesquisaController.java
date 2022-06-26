@@ -33,7 +33,7 @@ public class PesquisaController {
 	private PesquisaService pesquisaService;
 	
 	@PostMapping("cadastrar-pesquisa")
-	public ResponseEntity<String> cadastrarPesquisa(@Valid @RequestBody PesquisaDTO dto, BindingResult bindingResult) throws JsonProcessingException{
+	public ResponseEntity<String> cadastrarPesquisa(@Valid @RequestBody PesquisaDTO dto, BindingResult bindingResult, @PathParam("token") String token) throws JsonProcessingException{
 		
 		if(bindingResult.hasErrors()) {
 			List<FieldError> erros = bindingResult.getFieldErrors();
@@ -49,7 +49,7 @@ public class PesquisaController {
 		}
 		
 		try {
-			pesquisaService.cadastrarPesquisa(dto);
+			pesquisaService.cadastrarPesquisa(dto, token);
 		} catch (Exception e) {
 			return ResponseEntity.status(
 					HttpStatus.UNAUTHORIZED).body(e.getMessage());

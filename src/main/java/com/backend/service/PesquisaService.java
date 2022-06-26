@@ -1,6 +1,7 @@
 package com.backend.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,34 +38,36 @@ public class PesquisaService {
 	private JWTUtil util;
 
 	@Transactional
-	public void cadastrarPesquisa(PesquisaDTO dto) throws Exception {
+	public void cadastrarPesquisa(PesquisaDTO dto, String token) throws Exception {
 
+		if(token == null) {
+			throw new Exception("ERRO TOKEN É OBRIGATÓRIO");
+		}
+		
+		Date date = util.extrairTempoValidade(token);
+		if(date == null) {
+			throw new Exception("ERRO TOKEN INVÁLIDO");
+		}
+		
+		Usuario user = null;
+		try {
+			String email = util.extrairUsername(token);
+			user = usuarioRepository.findByEmail(email);
+		} catch (Exception e) {
+			throw new Exception("ERRO TOKEN NÃO PODE SER EXTRAÍDO");
+		}
+		
+		if(user.getTipoUsuario().equals(TipoUsuario.COLABORADOR)) {
+			throw new Exception("ERRO ID NÃO É DE UM PESQUISADOR");
+		}
+		PesquisadorInstitucional pesquisador = (PesquisadorInstitucional) user;
+		
 		Long id = dto.getColaboradorId();
-		Optional<Usuario> cca = usuarioRepository.findById(id);
-		if (cca.isEmpty()) {
+		Optional<Colaborador> colaborador = colaboradorRepository.findById(id);
+		if (colaborador.isEmpty()) {
 			throw new Exception("ERRO COLABORADOR NÃO CADASTRADO");
 		}
-
-		FuncionarioCCA user = null;
-		try {
-			user = (FuncionarioCCA) cca.get();
-		} catch (Exception e) {
-			throw new Exception("ERRO ID FORNECIDO NÂO É DE UM COLABORADOR");
-		}
-
-		Long idPsi = dto.getPesquisadorId();
-		Optional<Usuario> psi = usuarioRepository.findById(idPsi);
-		if (psi.isEmpty()) {
-			throw new Exception("ERRO PESQUISADOR NÃO CADASTRADO");
-		}
-
-		PesquisadorInstitucional pesquisador = null;
-		try {
-			pesquisador = (PesquisadorInstitucional) psi.get();
-		} catch (Exception e) {
-			throw new Exception("ERRO ID FORNECIDO NÂO É DE UM PESQUISADOR");
-		}
-
+		
 		Pesquisa pesquisa = new Pesquisa();
 		pesquisa.setDataInicio(dto.getDataInicio());
 		pesquisa.setDataTermino(dto.getDataTermino());
@@ -73,33 +76,22 @@ public class PesquisaService {
 		pesquisa.setTerminoDoCiclo(dto.getTerminoDoCiclo());
 		pesquisa.setStatus(Status.AGUARDANDO_UPLOAD_DE_ARQUIVOS);
 		
-		Optional<Colaborador> response = colaboradorRepository.findByFuncionarioCCA(user);
 		List<Colaborador> colaboradores = new ArrayList<>();
-		Colaborador colaborador = null;
-		if(response.isEmpty()) {
-			colaborador = new Colaborador();
-			colaborador.setCampus(user.getCampus());
-			colaborador.setEmail(user.getEmail());
-			colaborador.setFuncionarioCCA(user);
-			colaborador.setMatricula(user.getMatricula());
-			colaborador.setNome(user.getNome());
-			colaboradorRepository.saveAndFlush(colaborador);
-		}else {
-			colaborador = response.get();
-		}
 		
-		colaboradores.add(colaborador);
+		colaboradores.add(colaborador.get());
 		pesquisa.setColaboradores(colaboradores);
-		user.setColaboradores(colaboradores);
-		user.getCampus().setColaboradorPesquisas(colaboradores);
 
 		repository.save(pesquisa);
-		usuarioRepository.save(user);
 	}
 
 	public Page<Pesquisa> listarPorUsuario(String token, Pageable pageable) {
 
 		if(token == null) {
+			return new PageImpl<>(new ArrayList<>());
+		}
+		
+		Date date = util.extrairTempoValidade(token);
+		if(date == null) {
 			return new PageImpl<>(new ArrayList<>());
 		}
 		

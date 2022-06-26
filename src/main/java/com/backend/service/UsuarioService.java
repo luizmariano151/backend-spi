@@ -13,12 +13,14 @@ import org.springframework.stereotype.Service;
 
 import com.backend.dto.UsuarioDTO;
 import com.backend.model.search.Campus;
+import com.backend.model.search.Colaborador;
 import com.backend.model.user.FuncionarioCCA;
 import com.backend.model.user.Role;
 import com.backend.model.user.TipoUsuario;
 import com.backend.model.user.Usuario;
 import com.backend.model.user.Solicitacao;
 import com.backend.repository.CampusRepository;
+import com.backend.repository.ColaboradorRepository;
 import com.backend.repository.RoleRepository;
 import com.backend.repository.UsuarioRepository;
 import com.backend.repository.SolicitacaoRepository;
@@ -34,6 +36,8 @@ public class UsuarioService {
 	private RoleRepository roleRepository;
 	@Autowired
 	private SolicitacaoRepository solicitacaoRepository;
+	@Autowired
+	private ColaboradorRepository colaboradorRepository;
 
 	public String buscarPerfil(String email) {
 		
@@ -97,6 +101,14 @@ public class UsuarioService {
 			Campus campus = usuario.getCampus();
 			campus.setFuncionarioCCAs(ccas);
 			
+			Colaborador colaborador = new Colaborador();
+			colaborador.setCampus(usuario.getCampus());
+			colaborador.setEmail(usuario.getEmail());
+			colaborador.setFuncionarioCCA(usuario);
+			colaborador.setMatricula(usuario.getMatricula());
+			colaborador.setNome(usuario.getNome());
+			
+			colaboradorRepository.save(colaborador);
 			usuarioRepository.save((Usuario) usuario);
 			campusRepository.save(campus);
 			solicitacaoRepository.delete(solicitacao.get());

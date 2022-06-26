@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backend.model.user.FuncionarioCCA;
+import com.backend.model.search.Colaborador;
 import com.backend.service.ColaboradorService;
 
 @RestController
@@ -21,9 +21,9 @@ public class ColaboradorController {
 	private ColaboradorService colaboradorService;
 	
 	@RequestMapping("/listar-por-campus")
-	public ResponseEntity<List<FuncionarioCCA>> findByCampus(@PathParam("campus") String campus){
+	public ResponseEntity<List<Colaborador>> findByCampus(@PathParam("campus") String campus){
 		
-		List<FuncionarioCCA> colaboradores = colaboradorService.findByCampus(campus);
+		List<Colaborador> colaboradores = colaboradorService.findByCampus(campus);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(colaboradores);
 	}

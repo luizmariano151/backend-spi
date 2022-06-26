@@ -12,10 +12,6 @@ import lombok.Data;
 @Data
 public class PesquisaDTO {
 	
-	@NotNull(message = "ID DO PESQUISADOR NÃO PODE SER NULO")
-	@Positive(message = "ID DO PESQUISADOR INVÁLIDO")
-	private Long pesquisadorId;
-	
 	@NotNull(message = "ID DO COLABORADOR NÃO PODE SER NULO")
 	@Positive(message = "ID DO COLABORADOR INVÁLIDO")
 	private Long colaboradorId;
@@ -39,8 +35,7 @@ public class PesquisaDTO {
 	@Override
 	public String toString() {
 		return "PesquisaDTO [colaboradorId=" + colaboradorId + ", dataInicio=" + dataInicio + ", dataTermino="
-				+ dataTermino + ", terminoDoCiclo=" + terminoDoCiclo + ", inicioDoCiclo=" + inicioDoCiclo + "]";
+				+ dataTermino + ", inicioDoCiclo=" + inicioDoCiclo + ", terminoDoCiclo=" + terminoDoCiclo + "]";
 	}
-	
 	
 }
