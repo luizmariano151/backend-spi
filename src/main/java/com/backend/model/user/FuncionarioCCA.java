@@ -1,7 +1,6 @@
 package com.backend.model.user;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,11 +17,19 @@ import com.backend.model.search.Campus;
 import com.backend.model.search.Colaborador;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name = "TB_FUNCIONARIO_CCA")
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class FuncionarioCCA extends Usuario{
 
 	private static final long serialVersionUID = 1L;
@@ -40,34 +47,5 @@ public class FuncionarioCCA extends Usuario{
 	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "funcionarioCCA")
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private List<Colaborador> colaboradores;
-	
-	public FuncionarioCCA() {
-	}
-
-	@Override
-	public String toString() {
-		return "FuncionarioCCA [id=" + id + ", campus=" + campus + ", colaboradores=" + colaboradores + "]";
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		FuncionarioCCA other = (FuncionarioCCA) obj;
-		return Objects.equals(campus, other.campus) && Objects.equals(colaboradores, other.colaboradores)
-				&& Objects.equals(id, other.id);
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(campus, colaboradores, id);
-		return result;
-	}
 
 }

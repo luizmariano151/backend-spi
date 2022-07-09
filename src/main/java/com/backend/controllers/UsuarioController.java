@@ -61,7 +61,7 @@ public class UsuarioController {
 
 	@PostMapping("/solicitar-cadastro")
 	public ResponseEntity<String> solicitarCadastroColaborador(@Valid @RequestBody UsuarioDTO usuario,
-			BindingResult bindingResult, @PathParam("campus") String campus) throws JsonProcessingException {
+			BindingResult bindingResult) throws JsonProcessingException {
 
 		if (bindingResult.hasErrors()) {
 			
@@ -79,7 +79,7 @@ public class UsuarioController {
 		}
 
 		try {
-			usuarioService.solicitarCadastro(usuario, campus);
+			usuarioService.solicitarCadastro(usuario);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
 		}

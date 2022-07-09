@@ -21,11 +21,11 @@ public class ColaboradorController {
 	private ColaboradorService colaboradorService;
 	
 	@RequestMapping("/listar-por-campus")
-	public ResponseEntity<List<Colaborador>> findByCampus(@PathParam("campus") String campus){
+	public ResponseEntity<List<Colaborador>> findByCampus(@PathParam("id") Long id){
 		
-		List<Colaborador> colaboradores = colaboradorService.findByCampus(campus);
-		
+		List<Colaborador> colaboradores = colaboradorService.findByCampus(id);
 		return ResponseEntity.status(HttpStatus.OK).body(colaboradores);
+		
 	}
 	
 }

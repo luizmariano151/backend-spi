@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.cors().and().csrf().disable().authorizeRequests()
 		.antMatchers("/resources/**").permitAll()
 		.antMatchers(HttpMethod.GET, "/").permitAll()
+		.antMatchers(HttpMethod.GET,"/campus/listar").permitAll()
 		.antMatchers(HttpMethod.POST, "/usuario/autenticar").permitAll()
 		.antMatchers(HttpMethod.POST, "/usuario/solicitar-cadastro").permitAll()
 		.antMatchers(HttpMethod.POST, "/usuario/aceitar-solicitacao").hasAnyAuthority("PESQUISADOR")

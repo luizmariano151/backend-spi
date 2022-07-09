@@ -46,27 +46,26 @@ public class UsuarioService {
 	
 	}
 
-	public void solicitarCadastro(UsuarioDTO usuarioDTO, String campus) throws Exception{
+	public void solicitarCadastro(UsuarioDTO usuarioDTO) throws Exception{
 		
-		Usuario usuarioParse = usuarioDTO.parser();
+		Optional<Campus> getCampus = campusRepository.findById(usuarioDTO.getCampus());
+		if(getCampus.isEmpty()) {
+			throw new Exception("CAMPUS NÃO ENCONTRADO");
+		}
+
 		Solicitacao solicitacao = new Solicitacao();
 		FuncionarioCCA usuario = new FuncionarioCCA();
 		
 		usuario.setTipoUsuario(TipoUsuario.COLABORADOR);
-		usuario.setNome(usuarioParse.getNome());
-		usuario.setMatricula(usuarioParse.getMatricula());
-		usuario.setCpf(usuarioParse.getCpf());
-		usuario.setEmail(usuarioParse.getEmail());
-		
-		Optional<Campus> getCampus = campusRepository.findByNome(campus);
-		if(getCampus.isEmpty()) {
-			throw new Exception("CAMPUS É OBRIGATÓRIO");
-		}
+		usuario.setNome(usuarioDTO.getNome());
+		usuario.setMatricula(usuarioDTO.getMatricula());
+		usuario.setCpf(usuarioDTO.getCpf());
+		usuario.setEmail(usuarioDTO.getEmail());
 		usuario.setCampus(getCampus.get());
 		
 		Optional<Role> buscarRole = roleRepository.findByRole("COLABORADOR");
 		if (buscarRole.isEmpty()) {
-			throw new Exception("PERFIL DO USUÁRIO É OBRIGATÓRIO");
+			throw new Exception("PERFIL DO USUÁRIO NÃO ESTÁ CADASTRADO NO BANCO DE DADOS");
 		}
 		
 		Set<Role> roles = new HashSet<Role>();

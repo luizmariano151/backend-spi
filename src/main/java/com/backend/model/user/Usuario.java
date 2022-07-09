@@ -23,13 +23,19 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name="TB_USUARIO")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Usuario implements UserDetails{
 	
 	private static final long serialVersionUID = -4415053381921478760L;
@@ -61,9 +67,6 @@ public class Usuario implements UserDetails{
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Set<Role> roles;
 	
-	public Usuario() {
-	}
-
 	@Override
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -106,9 +109,4 @@ public class Usuario implements UserDetails{
 		return true;
 	}
 	
-	@Override
-	public String toString() {
-		return "Usuario [id=" + id + ", email=" + email + ", tipoUsuario=" + tipoUsuario
-				+ ", roles=" + roles + "]";
-	}
 }

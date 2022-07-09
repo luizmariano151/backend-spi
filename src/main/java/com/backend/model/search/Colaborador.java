@@ -13,11 +13,17 @@ import com.backend.model.user.FuncionarioCCA;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name = "TB_COLABORADOR")
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Colaborador {
 	
 	@Id
@@ -41,15 +47,6 @@ public class Colaborador {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private FuncionarioCCA funcionarioCCA;
 	
-	public Colaborador() {
-	}
-
-	@Override
-	public String toString() {
-		return "Colaborador [id=" + id + ", matricula=" + matricula + ", nome=" + nome + ", email=" + email
-				+ ", campus=" + campus + ", funcionarioCCA=" + funcionarioCCA + "]";
-	}
-
 }
 
 	

@@ -10,6 +10,6 @@ import com.backend.model.search.Campus;
 @Repository
 public interface CampusRepository extends JpaRepository<Campus, Long>{
 
-	Optional<Campus> findByNome(String nome);
-	
+	Optional<Campus> findById(Long id);
+
 }

@@ -7,9 +7,15 @@ import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class PesquisaDTO {
 	
 	@NotNull(message = "ID DO COLABORADOR NÃO PODE SER NULO")
@@ -29,13 +35,5 @@ public class PesquisaDTO {
 	
 	@NotNull(message = "DATA DO TÉRMINO DO CICLO NÃO PODER SER NULA")
 	private LocalDate terminoDoCiclo;
-	
-	public PesquisaDTO(){}
-
-	@Override
-	public String toString() {
-		return "PesquisaDTO [colaboradorId=" + colaboradorId + ", dataInicio=" + dataInicio + ", dataTermino="
-				+ dataTermino + ", inicioDoCiclo=" + inicioDoCiclo + ", terminoDoCiclo=" + terminoDoCiclo + "]";
-	}
 	
 }

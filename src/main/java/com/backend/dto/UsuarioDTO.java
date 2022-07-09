@@ -7,11 +7,15 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
 
-import com.backend.model.user.Usuario;
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class UsuarioDTO {
 
 	@Size(min = 4, max = 100, message = "NOME DEVE TER ENTRE 4 E 100 CARACTERES")
@@ -29,14 +33,7 @@ public class UsuarioDTO {
 	@Email(message = "EMAIL INVÁLIDO")
 	private String email;
 	
-	public Usuario parser(){
-		
-		Usuario usuario = new Usuario();
-		usuario.setNome(this.nome);
-		usuario.setMatricula(this.matricula);
-		usuario.setCpf(this.cpf);
-		usuario.setEmail(this.email);
-		
-		return usuario;
-	}	
+	@NotNull(message = " ID DO CAMPUS É OBRIGATÓRIO")
+	private Long campus;
+	
 }

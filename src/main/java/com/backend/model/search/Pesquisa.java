@@ -21,12 +21,18 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name = "TB_PESQUISA")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Pesquisa {
 
 	@Id
@@ -55,14 +61,5 @@ public class Pesquisa {
 
 	@Column(columnDefinition = "DATE")
 	private LocalDate terminoDoCiclo;
-
-	public Pesquisa() {
-	}
-
-	@Override
-	public String toString() {
-		return "Pesquisa [id=" + id + ", status=" + status + ", pesquisador=" + pesquisador + ", colaboradores="
-				+ colaboradores + ", dataInicio=" + dataInicio + ", dataTermino=" + dataTermino + ", inicioDoCiclo="
-				+ inicioDoCiclo + ", terminoDoCiclo=" + terminoDoCiclo + "]";
-	}
+	
 }

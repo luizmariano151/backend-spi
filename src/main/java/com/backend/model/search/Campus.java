@@ -15,12 +15,19 @@ import org.hibernate.validator.constraints.br.CNPJ;
 
 import com.backend.model.user.FuncionarioCCA;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name = "TB_CAMPUS")
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Campus {
 	
 	@Id
@@ -28,10 +35,12 @@ public class Campus {
 	private Long id;
 	
 	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "campus")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private List<FuncionarioCCA> funcionarioCCAs;
 	
-	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "campus")
 	@JsonManagedReference
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "campus")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private List<Colaborador> colaboradorPesquisas;
 	
 	@Column(length = 50)
@@ -56,16 +65,5 @@ public class Campus {
 	private String cep; 
 	
 	private String telefone;
-	
-	public Campus() {
-	}
-
-	@Override
-	public String toString() {
-		return "Campus [id=" + id + ", funcionarioCCAs=" + funcionarioCCAs + ", colaboradorPesquisas="
-				+ colaboradorPesquisas + ", nome=" + nome + ", sigla=" + sigla + ", cnpj=" + cnpj + ", endereco="
-				+ endereco + ", municipioNome=" + municipioNome + ", municipioUf=" + municipioUf + ", cep=" + cep
-				+ ", telefone=" + telefone + "]";
-	}
 
 }

@@ -20,10 +20,9 @@ public class ColaboradorService {
 	@Autowired
 	private ColaboradorRepository repository;
 	
-	public List<Colaborador> findByCampus(String nome){
+	public List<Colaborador> findByCampus(Long id){
 		
-		Optional<Campus> campus = campusRepository.findByNome(nome);
-		
+		Optional<Campus> campus = campusRepository.findById(id);
 		if(!campus.isEmpty()) {
 			Optional<List<Colaborador>> colaboradores = repository.findByCampus(campus.get());
 			if(!colaboradores.isEmpty()) {
@@ -31,7 +30,7 @@ public class ColaboradorService {
 			}
 		}
 		return new ArrayList<>();
+		
 	}
-	
 	
 }
