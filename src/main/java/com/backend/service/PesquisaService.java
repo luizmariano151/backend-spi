@@ -74,7 +74,7 @@ public class PesquisaService {
 		pesquisa.setPesquisador(pesquisador);
 		pesquisa.setInicioDoCiclo(dto.getInicioDoCiclo());
 		pesquisa.setTerminoDoCiclo(dto.getTerminoDoCiclo());
-		pesquisa.setStatus(Status.AGUARDANDO_UPLOAD_DE_ARQUIVOS);
+		pesquisa.setStatus(Status.ATRIBUIDA);
 		
 		List<Colaborador> colaboradores = new ArrayList<>();
 		
