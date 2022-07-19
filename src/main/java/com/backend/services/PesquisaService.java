@@ -1,4 +1,4 @@
-package com.backend.service;
+package com.backend.services;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,9 +21,9 @@ import com.backend.model.user.FuncionarioCCA;
 import com.backend.model.user.PesquisadorInstitucional;
 import com.backend.model.user.TipoUsuario;
 import com.backend.model.user.Usuario;
-import com.backend.repository.ColaboradorRepository;
-import com.backend.repository.PesquisaRepository;
-import com.backend.repository.UsuarioRepository;
+import com.backend.repositores.ColaboradorRepository;
+import com.backend.repositores.PesquisaRepository;
+import com.backend.repositores.UsuarioRepository;
 
 @Service
 public class PesquisaService {

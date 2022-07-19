@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.model.search.Colaborador;
-import com.backend.service.ColaboradorService;
+import com.backend.services.ColaboradorService;
 
 @RestController
 @RequestMapping("/colaborador")

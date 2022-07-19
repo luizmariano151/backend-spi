@@ -1,4 +1,4 @@
-package com.backend.service;
+package com.backend.services;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,12 +18,12 @@ import com.backend.model.user.FuncionarioCCA;
 import com.backend.model.user.Role;
 import com.backend.model.user.TipoUsuario;
 import com.backend.model.user.Usuario;
+import com.backend.repositores.CampusRepository;
+import com.backend.repositores.ColaboradorRepository;
+import com.backend.repositores.RoleRepository;
+import com.backend.repositores.SolicitacaoRepository;
+import com.backend.repositores.UsuarioRepository;
 import com.backend.model.user.Solicitacao;
-import com.backend.repository.CampusRepository;
-import com.backend.repository.ColaboradorRepository;
-import com.backend.repository.RoleRepository;
-import com.backend.repository.UsuarioRepository;
-import com.backend.repository.SolicitacaoRepository;
 
 @Service
 public class UsuarioService {

@@ -1,4 +1,4 @@
-package com.backend.service;
+package com.backend.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.backend.model.search.Campus;
 import com.backend.model.search.Colaborador;
-import com.backend.repository.CampusRepository;
-import com.backend.repository.ColaboradorRepository;
+import com.backend.repositores.CampusRepository;
+import com.backend.repositores.ColaboradorRepository;
 
 @Service
 public class ColaboradorService {

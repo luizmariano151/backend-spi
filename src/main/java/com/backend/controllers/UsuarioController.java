@@ -25,8 +25,8 @@ import com.backend.config.JWTUtil;
 import com.backend.dto.AuthDTO;
 import com.backend.dto.UsuarioDTO;
 import com.backend.model.user.UsuarioCredenciais;
+import com.backend.services.UsuarioService;
 import com.backend.model.user.Solicitacao;
-import com.backend.service.UsuarioService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

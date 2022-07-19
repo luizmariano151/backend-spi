@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.model.search.Campus;
-import com.backend.service.CampusService;
+import com.backend.services.CampusService;
 
 @RestController
 @RequestMapping("/campus")

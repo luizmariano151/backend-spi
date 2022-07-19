@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.dto.PesquisaDTO;
 import com.backend.model.search.Pesquisa;
-import com.backend.service.PesquisaService;
+import com.backend.services.PesquisaService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
