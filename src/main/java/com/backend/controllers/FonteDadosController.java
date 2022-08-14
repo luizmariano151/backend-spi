@@ -1,36 +1,32 @@
 package com.backend.controllers;
 
-import java.util.List;
+import java.io.IOException;
+import java.io.InputStream;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.backend.dto.SistecDTO;
-import com.backend.dto.SuapDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/fonte-dados")
 public class FonteDadosController {
-	
+
 	@PostMapping("/extrair-dados")
-	public ResponseEntity<Boolean> extrairDados(
-			@RequestBody(required = true) List<SuapDTO> suapDTOs, 
-			@RequestBody(required = true) List<SistecDTO> sistecDTOs){
-		
-		System.out.println("Arquivos SUAP");
-		for (SuapDTO dto : suapDTOs) {
-			System.out.println(dto);
+	public ResponseEntity<Boolean> extrairDados(@RequestParam("file") MultipartFile file) {
+		try {
+			InputStream input = file.getInputStream();
+			String file2 = StringUtils.cleanPath(file.getOriginalFilename());
+			Long size = file.getSize();
+			System.out.println(file);
+			System.out.println(size);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		
-		System.out.println("/nArquivos SISTEC");
-		for (SistecDTO dto : sistecDTOs) {
-			System.out.println(dto);
-		}
-		
 		return ResponseEntity.status(HttpStatus.OK).body(true);
 	}
 }
