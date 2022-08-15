@@ -18,13 +18,13 @@ import org.springframework.web.multipart.MultipartFile;
 public class FonteDadosController {
 
 	@PostMapping("/extrair-dados")
-	public ResponseEntity<Boolean> extrairDados(@RequestParam("file") MultipartFile suapFile, @RequestParam("file") MultipartFile sistecFile) {
+	public ResponseEntity<Boolean> extrairDados(@RequestParam("file") MultipartFile suapFile, @RequestParam("file2") MultipartFile sistecFile) {
 		InputStream input =null;
+		File arqSuap = new File("recebido_suap.csv");
+		File arqSistec = new File("recebido_sistec.csv");
 		try {
 			input = suapFile.getInputStream();
-			File arqSuap = new File("recebido_suap.csv");
 			FileUtils.copyInputStreamToFile(input, arqSuap);
-			File arqSistec = new File("recebido_sistec.csv");
 			input = sistecFile.getInputStream();
 			FileUtils.copyInputStreamToFile(input, arqSistec);
 		} catch (IOException e) {
