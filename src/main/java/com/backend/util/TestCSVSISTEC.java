@@ -11,14 +11,21 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 //PROGRAMA UTILIZADO PARA TESTAR SE O SISTEMA CONSEGUE CONVERTER 
 public class TestCSVSISTEC {
-	public static void toJSON(File csv) {
+	//arquivo a ser convertido e classe de mapeamento do csv
+	public static void toJSON(File csv, Object input) {
 		//Gerando o esquema e definindo suas caracteristicas
-		CsvSchema orderLineSchema = CsvSchema.emptySchema().withHeader().withColumnSeparator(";".charAt(0)); 
+		CsvSchema orderLineSchema = CsvSchema.emptySchema().withHeader().withColumnSeparator(",".charAt(0)); 
 		CsvMapper csvMapper = new CsvMapper(); 
 		MappingIterator orderLines = null;
 		try {
 			//lendo os valores do csv e criando o .json
-			orderLines = csvMapper.readerFor(SISTECCSVtoJSON.class).with(orderLineSchema).readValues(csv);
+			if(input instanceof SISTECCSVtoJSON)
+			{
+				orderLines = csvMapper.readerFor(SISTECCSVtoJSON.class).with(orderLineSchema).readValues(csv);				
+			}else
+			{
+				orderLines = csvMapper.readerFor(SUAPCSVtoJSON.class).with(orderLineSchema).readValues(csv);				
+			}
 			new ObjectMapper().configure(SerializationFeature.INDENT_OUTPUT, true).writeValue(new File("orderLinesFromCsv.json"),orderLines.readAll());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -26,8 +33,9 @@ public class TestCSVSISTEC {
 		}
 	}
 	public static void main(String[] args) {
-		File arq = new File("rel.csv");
-		TestCSVSISTEC.toJSON(arq);
+		File arq = new File("Relatoriocsv.csv");
+		SUAPCSVtoJSON input = new SUAPCSVtoJSON();
+		TestCSVSISTEC.toJSON(arq, input);
 		System.out.println("OK");
 	}
 }
