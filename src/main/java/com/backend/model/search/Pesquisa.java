@@ -28,11 +28,11 @@ import lombok.ToString;
 
 @Data
 @Entity
-@Table(name = "TB_PESQUISA")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "TB_PESQUISA")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 public class Pesquisa {
 
 	@Id
