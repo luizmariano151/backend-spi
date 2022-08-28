@@ -1,10 +1,6 @@
 package com.backend.controllers;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,24 +9,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.backend.services.FonteDadosService;
+
 @RestController
 @RequestMapping("/fonte-dados")
 public class FonteDadosController {
+	
+	@Autowired
+	private FonteDadosService service;
 
 	@PostMapping("/extrair-dados")
-	public ResponseEntity<Boolean> extrairDados(@RequestParam("file") MultipartFile suapFile, @RequestParam("file2") MultipartFile sistecFile) {
-		InputStream input =null;
-		File arqSuap = new File("recebido_suap.csv");
-		File arqSistec = new File("recebido_sistec.csv");
+	public ResponseEntity<Boolean> extrairDados(
+			@RequestParam("sistec") MultipartFile sistec,
+			@RequestParam("suap") MultipartFile suap) {
+
+		HttpStatus erro = HttpStatus.EXPECTATION_FAILED;
 		try {
-			input = suapFile.getInputStream();
-			FileUtils.copyInputStreamToFile(input, arqSuap);
-			input = sistecFile.getInputStream();
-			FileUtils.copyInputStreamToFile(input, arqSistec);
-		} catch (IOException e) {
-			e.printStackTrace();
+			Boolean response = service.extrairDados(sistec, suap);
+			ResponseEntity<Boolean> retorno; 
+			retorno = response == true ? 
+				ResponseEntity.status(HttpStatus.CREATED).body(true) : 
+				ResponseEntity.status(erro).body(false); 
+			return retorno;
+		} catch (Exception e) {
+			return ResponseEntity.status(erro).body(false);
 		}
-			
-			return ResponseEntity.status(HttpStatus.OK).body(true);
 	}
+	
 }
