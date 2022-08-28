@@ -1,6 +1,6 @@
 package com.backend.model.search;
 
-import java.time.LocalDate;
+import java.io.Serializable;
 
 
 import lombok.AllArgsConstructor;
@@ -13,9 +13,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-public class Aluno {
+public class Aluno implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String CPF;
 	private String nome;
 	private Curso curso;
-	private LocalDate dataMatricula;
 }
